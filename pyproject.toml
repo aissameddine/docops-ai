@@ -7,7 +7,10 @@ authors = [
     { name = "aissameddine", email = "boukhelkhalissam@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pydantic>=2.13.5",
+    "pymupdf>=1.28.2",
+]
 
 [project.scripts]
 docops-ai = "docops_ai:main"
