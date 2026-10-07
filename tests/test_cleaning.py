@@ -15,3 +15,24 @@ def test_collapses_blank_lines_and_trailing_spaces():
 
 def test_nbsp_becomes_space():
     assert clean_text("a\u00a0b") == "a b"
+
+
+def test_ligatures_are_expanded():
+    assert clean_text("\ufb01ltrage et \ufb02ux") == "filtrage et flux"
+    assert clean_text("o\ufb03ce") == "office"
+
+
+def test_hyphenated_line_break_is_rejoined():
+    assert clean_text("donn\u00e9es structu-\nrelles") == "donn\u00e9es structurelles"
+    assert clean_text("collabo- \nratif") == "collaboratif"
+
+
+def test_hyphen_before_capital_or_digit_is_kept():
+    assert clean_text("Jean-\nPaul") == "Jean-\nPaul"
+    assert clean_text("pages 3-\n4") == "pages 3-\n4"
+
+
+def test_normal_hyphens_are_untouched():
+    assert clean_text("socio-\u00e9conomique, c'est-\u00e0-dire") == (
+        "socio-\u00e9conomique, c'est-\u00e0-dire"
+    )
