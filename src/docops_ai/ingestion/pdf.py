@@ -5,6 +5,7 @@ import pymupdf
 
 from .cleaning import clean_text
 from .layout import strip_page_furniture
+from .listings import strip_listing_numbers
 from .models import PageContent
 
 
@@ -48,4 +49,5 @@ def ingest_pdf(path: str | Path) -> list[PageContent]:
             )
             for index, page in enumerate(doc)
         ]
-    return strip_page_furniture(pages)
+    pages = strip_page_furniture(pages)
+    return [page.model_copy(update={"text": strip_listing_numbers(page.text)}) for page in pages]
